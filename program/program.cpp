@@ -144,13 +144,13 @@ void printLambda(int n, Matrix a) {
 }
 
 
-void vectorMatrix(int n, Matrix a, double lamda) {
+//void vectorMatrix(int n, Matrix a, double lamda) {
 	//Matrix l1, l2;
-	for (int i = 0; i < n; i++) {
-		a[i][i] -= lamda;
-	}
+//	for (int i = 0; i < n; i++) {
+//		a[i][i] -= lamda;
+//	}
 	//upDownMatrix2(n, 1, a, l1, l2);
-	cout << -pow(lamda, 3) + pow(lamda, 2) * 6 - 11 * lamda + 6;
+	//cout << -pow(lamda, 3) + pow(lamda, 2) * 6 - 11 * lamda + 6;
 	///double* x = new double[n];
 	//for (int i = 0; i < n; i++) {
 	//	x[i] = 1;
@@ -166,7 +166,7 @@ void vectorMatrix(int n, Matrix a, double lamda) {
 	//	}
 //	}
 	//printMatrix(n, a);
-}
+//}
 
 int main(){
 	setlocale(LC_ALL, "ru");
@@ -215,7 +215,7 @@ int main(){
 			m = 0;
 		}
 		printLambda(n, a);
-			vectorMatrix(n, a2,3);
+			//vectorMatrix(n, a2,3);
 		cout << "0 - начать заново" << "\n";
 		cout << "Любая клавиша - выход" << "\n";
 		cin >> exitProgramm;
