@@ -47,6 +47,7 @@ void upDownMatrix1(int n, int id, Matrix a, Matrix &u, Matrix &l) {
 	{
 		for (int j = 0; j < n; j++)
 		{
+			//присвоение матрице L главной диагонали единичные значения
 			if (i == j) l[j][i] = 1.0;
 			else l[j][i] = 0.0;
 			u[j][i] = 0.0;
@@ -55,15 +56,20 @@ void upDownMatrix1(int n, int id, Matrix a, Matrix &u, Matrix &l) {
 	//непосредственно разложение
 	for (int k = 0; k < n; k++)
 	{
+		//присвоение матрице U в главной диагонали значения главной диагонали из a
 		u[k][k] = a[k][k];
 		for (int i = k + 1; i < n; i++)
 		{
+			// преобразованная формула 1.3
 			l[k][i] = a[k][i] / (u[k][k] == 0 ? 1 : u[k][k]);
 			u[i][k] = a[i][k];
 		}
 		for (int i = k + 1; i < n; i++)
 		{
-			for (int j = k + 1; j < n; j++) a[j][i] = a[j][i] - l[k][i] * u[j][k];
+			// преобразованная формула 1.2
+			for (int j = k + 1; j < n; j++) { 
+				a[j][i] = a[j][i] - l[k][i] * u[j][k]; 
+			}
 		}
 	}
 	cout << "Матрица L" << id << "\n";
@@ -76,7 +82,7 @@ void upDownMatrix1(int n, int id, Matrix a, Matrix &u, Matrix &l) {
 
 //Фиксация единичной диоганали U
 // процедура нахождения L - нижней и U - верхней треугольной матрицы
-void upDownMatrix2(int n, int id, Matrix a, Matrix& u, Matrix& l) {
+void upDownMatrix2(int n, int id, Matrix a, Matrix&u, Matrix& l) {
 		//инициализация матриц L и U
 	for (int i = 0; i < n; i++)
 	{
@@ -98,7 +104,9 @@ void upDownMatrix2(int n, int id, Matrix a, Matrix& u, Matrix& l) {
 		}
 		for (int i = k + 1; i < n; i++)
 		{
-			for (int j = k + 1; j < n; j++) a[i][j] = a[i][j] - l[i][k] * u[k][j];
+			for (int j = k + 1; j < n; j++) {
+				a[i][j] = a[i][j] - l[i][k] * u[k][j];
+			}
 		}
 	}
 	cout << "Матрица U" << id << "\n";
@@ -170,10 +178,9 @@ void printLambda(int n, Matrix a) {
 
 int main(){
 	setlocale(LC_ALL, "ru");
-	Matrix  a, a1, a2, a3, l, l1, l2, l3, u, u1, u3, u2;
-	int n, k, m, exitProgramm;
+	Matrix  a, a1, l, l1, u, u1;
+	int n, k, m, exitProgramm = 0;
 
-	exitProgramm = 0;
 	// Цикл необходимый для выхоа из программы
 	while (exitProgramm == 0) {
 		//a1 = a;
@@ -185,37 +192,46 @@ int main(){
 		cout << "\n";
 		// Считываем матрицу
 		setMatrix(n, a);
-		setMatrix(n, a2);
+		//setMatrix(n, a2);
+		//Если с клавиатуры было введено 1 то программа выполнится с фиксацией единичной диоганали по L 
 		if (m == 1) {
 			for (int i = 1; i <= k; i++) {
 				cout << "k = " << i << "\n";
+				//присвоем значения матрицы а к а1
 				equalsMatrix(n, a, a1);
+				//раскладываем матрицу а на L и U
 				upDownMatrix1(n, i, a1, u, l);
+				//присвоем значения матрицы u к u1 и l к l1
 				equalsMatrix(n, u, u1);
 				equalsMatrix(n, l, l1);
-				//u1 = u; l1 = l;
+				//Умножение матрицы u1 и l1 
 				multiplicationMatrix(n, i, a, u1, l1);
 				cout << "\n";
+				//Вывод лямда
+				printLambda(n, a);
 			}
 		}
+		//Если с клавиатуры было введено ц то программа выполнится с фиксацией единичной диоганали по U
 		else if (m == 2) {
 			for (int i = 1; i <= k; i++) {
 				cout << "k = " << i << "\n";
+				//присвоем значения матрицы а к а1
 				equalsMatrix(n, a, a1);
+				//раскладываем матрицу а на L и U
 				upDownMatrix2(n, i, a1, u, l);
+				//присвоем значения матрицы u к u1 и l к l1
 				equalsMatrix(n, u, u1);
 				equalsMatrix(n, l, l1);
-				//u1 = u; l1 = l;
+				//Умножение матрицы u1 и l1 
 				multiplicationMatrix(n, i, a, l1, u1);
 				cout << "\n";
+				//Вывод лямда
+				printLambda(n, a);
 			}
-
-		}
-		else {
+			//вернется к началу цикла
+		}else {
 			m = 0;
 		}
-		printLambda(n, a);
-			//vectorMatrix(n, a2,3);
 		cout << "0 - начать заново" << "\n";
 		cout << "Любая клавиша - выход" << "\n";
 		cin >> exitProgramm;
