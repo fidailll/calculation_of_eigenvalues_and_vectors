@@ -22,7 +22,7 @@ void printMatrix(int n, Matrix a) {
 
 // Процедура считывания массива из файла  
 void setMatrix(int &n, Matrix &a) {
-	ifstream fin("C:\\Users\\fidail\\Documents\\mas.txt");
+	ifstream fin("mas.txt");
 	if (!fin.is_open()) {
 		cout << "Файл не открыт! Неправильный путь или формат файла";
 		exit;
@@ -37,6 +37,7 @@ void setMatrix(int &n, Matrix &a) {
 		}
 		printMatrix(n, a);
 	}
+	fin.close();
 }
 
 //Фиксация единичной диоганали L
